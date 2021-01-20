@@ -1,28 +1,31 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <Grid />
+    <Overlay v-show="!gameInProgress" />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Overlay from './components/Overlay';
+import Grid from './components/Grid';
 
 export default {
-  name: 'App',
   components: {
-    HelloWorld
+    Overlay,
+    Grid
+  },
+  computed: {
+    gameInProgress() {
+      return this.$store.state.gameInProgress;
+    }
   }
-}
+};
 </script>
 
-<style>
+<style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap');
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
+  font-family: 'Noto Sans', sans-serif;
   color: #2c3e50;
-  margin-top: 60px;
 }
 </style>
