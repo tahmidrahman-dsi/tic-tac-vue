@@ -12,6 +12,9 @@
     "vue": "^2.6.11",
     "vuex": "^3.6.0"
   },
+  "repository": {
+    "url": "https://github.com/tahmidrahman-dsi/tic-tac-vue"
+  },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.5.0",
