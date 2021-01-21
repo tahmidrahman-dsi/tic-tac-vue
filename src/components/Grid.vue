@@ -7,6 +7,9 @@
           <td
             v-for="column in dimension"
             v-bind:key="column"
+            v-bind:highlighted="
+              highlightedCells.includes((row - 1) * dimension + column - 1)
+            "
             v-on:click="onClickCell(row, column)"
           >
             <Cross
@@ -65,7 +68,7 @@ function getWinningCondition() {
 function checkGameState() {
   var winningCondition = getWinningCondition.apply(this);
   if (winningCondition) {
-    return { over: true, condition: winningCondition, winner: this.turn };
+    return { over: true, winningCondition, winner: this.turn };
   } else if (this.grid.every(Boolean)) {
     return { over: true, winner: null };
   } else return { over: false };
@@ -75,7 +78,8 @@ export default {
   data: function() {
     return {
       turn: 'x',
-      grid: getInitialState.apply(this)
+      grid: getInitialState.apply(this),
+      highlightedCells: []
     };
   },
   props: {
@@ -100,6 +104,7 @@ export default {
     isGameInProgress: function(newValue, oldValue) {
       var isGameRestarted = newValue && newValue != oldValue;
       if (isGameRestarted) {
+        this.highlightedCells = [];
         this.grid = getInitialState.apply(this);
         this.turn = 'x';
       }
@@ -114,6 +119,7 @@ export default {
         updateCell.apply(this, [position]);
         var gameState = checkGameState.apply(this);
         if (gameState.over) {
+          this.highlightedCells = gameState.winningCondition || [];
           this.setWinner({ winner: gameState.winner });
           this.stopGame();
         }
@@ -143,6 +149,10 @@ td {
 td > * {
   position: absolute;
   top: 0;
+}
+
+td[highlighted] {
+  border: 6px solid #42b883;
 }
 
 td,
