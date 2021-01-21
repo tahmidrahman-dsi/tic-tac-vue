@@ -7,19 +7,12 @@
           <td
             v-for="column in dimension"
             v-bind:key="column"
-            v-bind:highlighted="
-              highlightedCells.includes((row - 1) * dimension + column - 1)
-            "
+            :set="(position = (row - 1) * dimension + column - 1)"
+            v-bind:highlighted="highlightedCells.includes(position)"
             v-on:click="onClickCell(row, column)"
           >
-            <Cross
-              id="cross"
-              v-show="grid[(row - 1) * dimension + column - 1] === 'x'"
-            />
-            <CircleOutline
-              id="circle"
-              v-show="grid[(row - 1) * dimension + column - 1] === 'o'"
-            />
+            <Cross id="cross" v-show="grid[position] === 'x'" />
+            <CircleOutline id="circle" v-show="grid[position] === 'o'" />
           </td>
         </tr>
       </tbody>
