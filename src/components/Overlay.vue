@@ -32,11 +32,8 @@ export default {
     };
   },
   computed: {
-    gameResult() {
-      return {
-        winner: this.$store.state.winner,
-        player: this.$store.state.player
-      };
+    winner() {
+      return this.$store.state.winner;
     }
   },
   methods: {
@@ -46,13 +43,11 @@ export default {
     }
   },
   watch: {
-    gameResult: function(newResult) {
-      if (newResult.winner === newResult.player) {
-        this.message = 'You won!';
-      } else if (newResult.winner === null) {
+    winner: function(winningPlayer) {
+      if (!winningPlayer) {
         this.message = 'Game drawn!';
       } else {
-        this.message = 'You lost!';
+        this.message = winningPlayer.toUpperCase() + ' won!';
       }
     }
   }

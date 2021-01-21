@@ -1,5 +1,6 @@
 <template>
   <div class="grid">
+    <h4 v-show="isGameInProgress">Current turn: {{ turn.toUpperCase() }}</h4>
     <table>
       <tbody>
         <tr v-for="row in dimension" v-bind:key="row">
