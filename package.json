@@ -2,6 +2,10 @@
   "name": "tic-tac-vue",
   "version": "0.1.0",
   "private": true,
+  "author": {
+    "name": "Tahmid Rahman",
+    "email": "tahmidrahman.dsi@gmail.com"
+  },
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
