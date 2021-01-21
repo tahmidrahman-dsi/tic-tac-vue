@@ -6,19 +6,18 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
   state: {
     player: 'x',
-    gameInProgress: false,
-    winner: null
+    isGameInProgress: false,
+    winner: undefined
   },
   mutations: {
     setPlayer(state, payload) {
       state.player = payload.player;
-      state.gameInProgress = true;
     },
     startGame(state) {
-      state.gameInProgress = true;
+      state.isGameInProgress = true;
     },
     stopGame(state) {
-      state.gameInProgress = false;
+      state.isGameInProgress = false;
     },
     setWinner(state, payload) {
       state.winner = payload.winner;

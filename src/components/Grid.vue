@@ -90,6 +90,18 @@ export default {
   computed: {
     player() {
       return this.$store.state.player;
+    },
+    isGameInProgress() {
+      return this.$store.state.isGameInProgress;
+    }
+  },
+  watch: {
+    isGameInProgress: function(newValue, oldValue) {
+      var isGameRestarted = newValue && newValue != oldValue;
+      if (isGameRestarted) {
+        this.grid = getInitialState.apply(this);
+        this.turn = 'x';
+      }
     }
   },
   methods: {

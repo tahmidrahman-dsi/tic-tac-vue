@@ -1,5 +1,6 @@
 <template>
   <div id="overlay">
+    <h3 v-show="message">{{ message }}</h3>
     <div class="title">
       <h1>Tic</h1>
       <h1>Tac</h1>
@@ -7,10 +8,10 @@
     </div>
     <h3>Play?</h3>
     <div class="actions">
-      <button v-on:click="setPlayer({ player: 'x' })">
+      <button v-on:click="onClick('x')">
         <Cross />
       </button>
-      <button v-on:click="setPlayer({ player: 'o' })">
+      <button v-on:click="onClick('o')">
         <CircleOutline />
       </button>
     </div>
@@ -19,15 +20,41 @@
 <script>
 import Cross from './Cross';
 import CircleOutline from './Circle';
-import { mapMutations } from 'vuex';
 
 export default {
   components: {
     Cross,
     CircleOutline
   },
+  data: function() {
+    return {
+      message: ''
+    };
+  },
+  computed: {
+    gameResult() {
+      return {
+        winner: this.$store.state.winner,
+        player: this.$store.state.player
+      };
+    }
+  },
   methods: {
-    ...mapMutations(['setPlayer'])
+    onClick(player) {
+      this.$store.commit('setPlayer', { player });
+      this.$store.commit('startGame');
+    }
+  },
+  watch: {
+    gameResult: function(newResult) {
+      if (newResult.winner === newResult.player) {
+        this.message = 'You won!';
+      } else if (newResult.winner === null) {
+        this.message = 'Game drawn!';
+      } else {
+        this.message = 'You lost!';
+      }
+    }
   }
 };
 </script>

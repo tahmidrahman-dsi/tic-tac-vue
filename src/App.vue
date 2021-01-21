@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <Grid />
-    <Overlay v-show="!gameInProgress" />
+    <Overlay v-show="!isGameInProgress" />
   </div>
 </template>
 
@@ -15,8 +15,8 @@ export default {
     Grid
   },
   computed: {
-    gameInProgress() {
-      return this.$store.state.gameInProgress;
+    isGameInProgress() {
+      return this.$store.state.isGameInProgress;
     }
   }
 };
