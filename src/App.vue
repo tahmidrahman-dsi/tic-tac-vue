@@ -1,7 +1,9 @@
 <template>
   <div id="app">
     <Grid />
-    <Overlay v-show="!isGameInProgress" />
+    <transition name="fade">
+      <Overlay v-show="!isGameInProgress" />
+    </transition>
   </div>
 </template>
 
@@ -27,5 +29,15 @@ export default {
 #app {
   font-family: 'Noto Sans', sans-serif;
   color: #2c3e50;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 500ms;
+}
+
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>

@@ -53,7 +53,7 @@ export default {
   }
 };
 </script>
->
+
 <style scoped>
 #overlay {
   display: flex;
