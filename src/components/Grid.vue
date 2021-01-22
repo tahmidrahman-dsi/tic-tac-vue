@@ -116,9 +116,8 @@ export default {
           this.setWinner({ winner: gameState.winner });
           this.stopGame();
         }
+        changeTurn.apply(this);
       }
-
-      changeTurn.apply(this);
     },
     ...mapMutations(['stopGame', 'setWinner'])
   }
