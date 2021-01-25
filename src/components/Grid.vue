@@ -1,6 +1,6 @@
 <template>
   <div class="grid">
-    <h4 v-show="isGameInProgress">Current turn: {{ turn.toUpperCase() }}</h4>
+    <h4>Current turn: {{ turn.toUpperCase() }}</h4>
     <table>
       <tbody>
         <tr v-for="row in dimension" v-bind:key="row">
@@ -23,6 +23,7 @@
 import CircleOutline from './Circle';
 import Cross from './Cross';
 import { mapMutations } from 'vuex';
+import { checkGameState } from '../game';
 
 function getInitialState() {
   var dimension = this.$props.dimension;
@@ -36,35 +37,6 @@ function changeTurn() {
 
 function updateCell(position) {
   this.$set(this.grid, position, this.turn);
-}
-
-function getWinningCondition() {
-  var winConditions = [
-    [0, 1, 2],
-    [3, 4, 5],
-    [6, 7, 8],
-    [0, 3, 6],
-    [1, 4, 7],
-    [2, 5, 8],
-    [0, 4, 8],
-    [2, 4, 6]
-  ];
-
-  return winConditions.find(
-    (cell) =>
-      this.grid[cell[0]] !== null &&
-      this.grid[cell[0]] === this.grid[cell[1]] &&
-      this.grid[cell[1]] === this.grid[cell[2]]
-  );
-}
-
-function checkGameState() {
-  var winningCondition = getWinningCondition.apply(this);
-  if (winningCondition) {
-    return { over: true, winningCondition, winner: this.turn };
-  } else if (this.grid.every(Boolean)) {
-    return { over: true, winner: null };
-  } else return { over: false };
 }
 
 export default {
@@ -110,7 +82,7 @@ export default {
 
       if (isEmpty) {
         updateCell.apply(this, [position]);
-        var gameState = checkGameState.apply(this);
+        var gameState = checkGameState(this.grid, this.turn, this.dimension);
         if (gameState.over) {
           this.highlightedCells = gameState.winningCondition || [];
           this.setWinner({ winner: gameState.winner });
