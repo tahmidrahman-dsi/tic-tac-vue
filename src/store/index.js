@@ -7,7 +7,8 @@ const store = new Vuex.Store({
   state: {
     player: 'x',
     isGameInProgress: false,
-    winner: undefined
+    winner: undefined,
+    overall: [0, 0]
   },
   mutations: {
     setPlayer(state, payload) {
@@ -21,6 +22,9 @@ const store = new Vuex.Store({
     },
     setWinner(state, payload) {
       state.winner = payload.winner;
+    },
+    updateOverall(state, player) {
+      Vue.set(state.overall, player - 1, state.overall[player - 1] + 1);
     }
   }
 });

@@ -1,6 +1,9 @@
 <template>
   <div class="grid">
-    <h4>Current turn: {{ turn.toUpperCase() }}</h4>
+    <h4>
+      Current turn: Player {{ player === turn ? '1' : '2' }} to play
+      {{ turn.toUpperCase() }}
+    </h4>
     <table>
       <tbody>
         <tr v-for="row in dimension" v-bind:key="row">
@@ -40,7 +43,7 @@ function updateCell(position) {
 }
 
 export default {
-  data: function() {
+  data: function () {
     return {
       turn: 'x',
       grid: getInitialState.apply(this),
@@ -66,7 +69,7 @@ export default {
     }
   },
   watch: {
-    isGameInProgress: function(newValue, oldValue) {
+    isGameInProgress: function (newValue, oldValue) {
       var isGameRestarted = newValue && newValue != oldValue;
       if (isGameRestarted) {
         this.highlightedCells = [];
@@ -87,11 +90,14 @@ export default {
           this.highlightedCells = gameState.winningCondition || [];
           this.setWinner({ winner: gameState.winner });
           this.stopGame();
+          this.updateOverall(
+            this.$store.state.player == gameState.winner ? 1 : 2
+          );
         }
         changeTurn.apply(this);
       }
     },
-    ...mapMutations(['stopGame', 'setWinner'])
+    ...mapMutations(['stopGame', 'setWinner', 'updateOverall'])
   }
 };
 </script>
