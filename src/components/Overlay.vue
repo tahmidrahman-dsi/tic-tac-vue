@@ -48,11 +48,12 @@ export default {
     };
   },
   computed: {
-    player() {
-      return this.$store.state.player;
-    },
     winner() {
-      return this.$store.state.winner;
+      return this.$store.state.winner
+        ? this.$store.state.winner == this.$store.state.player
+          ? 1
+          : 2
+        : null;
     },
     overall() {
       return this.$store.state.overall;
@@ -72,9 +73,7 @@ export default {
       if (!winningPlayer) {
         this.message = 'Game drawn!';
       } else {
-        const playerLabel =
-          this.player == winningPlayer ? 'Player 1' : 'Player 2';
-        this.message = playerLabel + ' won!';
+        this.message = 'Player ' + winningPlayer + ' won!';
       }
     },
     overall: function (result) {
