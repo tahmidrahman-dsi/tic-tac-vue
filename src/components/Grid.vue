@@ -90,9 +90,11 @@ export default {
           this.highlightedCells = gameState.winningCondition || [];
           this.setWinner({ winner: gameState.winner });
           this.stopGame();
-          this.updateOverall(
-            this.$store.state.player == gameState.winner ? 1 : 2
-          );
+          if (gameState.winner) {
+            this.updateOverall(
+              this.$store.state.player == gameState.winner ? 1 : 2
+            );
+          }
         }
         changeTurn.apply(this);
       }
